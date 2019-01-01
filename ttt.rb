@@ -4,6 +4,7 @@ class Player
   def initialize(a)
     @name = a
   end
+
   def choice
     puts "Please choose position"
     @x = gets.chomp
@@ -11,7 +12,6 @@ class Player
 end
 
 class Game
-
   def start
     puts "Enter player name"
     a = gets.chomp
@@ -20,27 +20,12 @@ class Game
 end
 
 class Grid
-  def initialize(arr) 
+  def initialize(arr)
     @res = arr
     display
   end
 
   def display
-    # @arr = [1,2,3,4,5,6,7,8,9]
-    #@res = []
-    # @res[x-1]='X'|| 'O'
-    #     i = 0
-    # while i < @arr.length
-    #     if @res[i]==nil
-    #         @res[i]=@arr[i]
-    #         if @res[i] == 'X' || 'O'
-    #             puts 'Error slot taken already'
-    #         end
-    #   end
-    #     i +=1
-
-    # end
-
     puts @grid = "
         #{@res[0]}|#{@res[1]}|#{@res[2]}
         -----
@@ -56,53 +41,66 @@ class Turn
     @p1 = p1.start
     @p2 = p2.start
     puts "Player1 is #{@p1.name}"
-     puts "Player2 is #{@p2.name}" 
-    turns 
-    
-  end 
+    puts "Player2 is #{@p2.name}"
+    turns
+  end
 
   def turns
-    @result = false 
+    @result = false
     @arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    i = 0
-    while !@result  
-      if i % 2 == 0 
-       a =  @p1.choice.to_i
-       @arr[a-1]='X'
-      
+    @i = 0
+    while !@result
+      Grid.new(@arr)
+      if @i % 2 == 0
+        a = @p1.choice.to_i
+        if check a
+          @arr[a - 1] = "X"
+        end
       else
-       b = @p2.choice.to_i
-       @arr[b-1]='O'
-     
-      end 
-       i += 1  
-       Grid.new(@arr) 
-        winner @arr ,i
-    end
-    
-   
-   end
-   
-    def winner comb ,i
-      @wins = [[0,1,2],[3,4,5],[6,7,8],[0,4,8],[2,4,6],[2,5,8],[1,4,7],[0,3,6]]   
-      
-      @wins.each do |i|
-        i.each do |j|
-          if comb[@wins[i][j]] == 'X'
-            @result = true
-            return "X wins"
-          elsif comb[@wins[i][j]] == 'O'
-          @result = true
-            return "O wins"
-          else i == 9 && @result 
-            @result = true
-            return "Nobody wins" 
-          end 
+        b = @p2.choice.to_i
+        if check b
+          @arr[b - 1] = "O"
         end
       end
+      @i += 1
+      winner @arr, @i
     end
-end 
+  end
 
-a = Game.new
-b = Game.new
-c = Turn.new(a,b)
+  def winner(comb, c)
+    wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    i = 0
+    while i < wins.length && @result == false
+      j = 0
+      while j < wins[i].length && @result == false
+        if comb[wins[i][j]] == "X" && comb[wins[i][j + 1]] == "X" && comb[wins[i][j + 2]] == "X"
+          @result = true
+          puts "X wins"
+        elsif comb[wins[i][j]] == "O" && comb[wins[i][j + 1]] == "O" && comb[wins[i][j + 2]] == "O"
+          @result = true
+          puts "O wins"
+        elsif c == 9 && !@result
+          @result = true
+          puts "Nobody wins"
+        else
+          break
+        end
+        j += 1
+      end
+      i += 1
+    end
+  end
+
+  def check(mate)
+    if !(1..9).include?(mate)
+      puts "Don't be clever!!!"
+      @i -= 1
+    end
+    if @arr[mate - 1] == "X" || @arr[mate - 1] == "O"
+      puts "Just don't try it"
+      @i -= 1
+      return false
+    end
+    true
+  end
+end
