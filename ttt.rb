@@ -104,3 +104,17 @@ class Turn
     true
   end
 end
+def game_play
+  a = Game.new
+  b = Game.new
+  c = Turn.new(a,b)
+  puts 'Game over'
+  puts "Type yes to play another game"
+  n = gets.chomp
+  if n == 'yes'
+    c.turns
+    else
+    puts 'Bye bye'
+    end
+  end
+  game_play
