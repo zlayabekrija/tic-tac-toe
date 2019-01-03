@@ -65,15 +65,18 @@ class Turn
   end
 
   def check_winner(comb, count)
-    wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
+    wins = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6],
+            [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]]
     i = 0
     while i < wins.length && @result == false
       j = 0
       while j < wins[i].length && @result == false
-        if comb[wins[i][j]] == 'X' && comb[wins[i][j + 1]] == 'X' && comb[wins[i][j + 2]] == 'X'
+        if comb[wins[i][j]] == 'X' && comb[wins[i][j + 1]] == 'X' &&
+           comb[wins[i][j + 2]] == 'X'
           @result = true
           puts 'X wins'
-        elsif comb[wins[i][j]] == 'O' && comb[wins[i][j + 1]] == 'O' && comb[wins[i][j + 2]] == 'O'
+        elsif comb[wins[i][j]] == 'O' && comb[wins[i][j + 1]] == 'O' &&
+              comb[wins[i][j + 2]] == 'O'
           @result = true
           puts 'O wins'
         elsif count == 9 && !@result
