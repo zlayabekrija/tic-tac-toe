@@ -1,7 +1,7 @@
 require_relative './../lib/ttt.rb'
 # Messages class
 class CmdMsgs
-  def self.player_name
+  def self.get_player_name
     i = 0
     b = []
     while i < 2

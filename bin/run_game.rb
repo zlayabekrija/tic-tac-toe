@@ -20,7 +20,7 @@ class Execution
     c = Turn.new
     arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     i = 0
-    CmdMsgs.player_name
+    CmdMsgs.get_player_name
     pla = i.even? ? 'X' : 'O'
     CmdMsgs.display arr
     checker(c, i, arr, pla)
