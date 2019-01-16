@@ -14,6 +14,7 @@ class Execution
       CmdMsgs.display arr
       ith += 1
     end
+    cth.check_winner(arr, pla) ? CmdMsgs.winner(pla) : CmdMsgs.draw
   end
 
   def self.turns
@@ -22,20 +23,17 @@ class Execution
     i = 0
     CmdMsgs.get_player_name
     pla = i.even? ? 'X' : 'O'
+    p pla
     CmdMsgs.display arr
     checker(c, i, arr, pla)
-
-    if c.game_over(c.check_draw(i), c.check_winner(arr, pla))
-      c.check_winner(arr, pla) ? CmdMsgs.winner(pla) : CmdMsgs.draw
-    end
   end
 
   def self.game_play
     turns
     puts 'Press any key to play, Type q to quit'
     n = gets.chomp
-    quit = puts 'Bye bye'
-    n == 'q' ? quit : game_play
+    quit = 'Bye bye'
+    n == 'q' ? (puts quit) : game_play
   end
 end
 
